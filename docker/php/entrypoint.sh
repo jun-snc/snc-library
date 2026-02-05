@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# DocumentRoot環境変数を設定
-export APACHE_DOCUMENT_ROOT=/var/www/html
-
-# Laravelプロジェクトが存在する場合はpublicディレクトリを使用
-if [ -d "/var/www/html/public" ]; then
-    export APACHE_DOCUMENT_ROOT=/var/www/html/public
-fi
-
 # Laravelプロジェクトが存在する場合のみ権限設定
 if [ -d "/var/www/html/storage" ]; then
     echo "Setting permissions for Laravel directories..."

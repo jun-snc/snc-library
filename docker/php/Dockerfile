@@ -37,12 +37,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Apacheのmod_rewrite有効化
 RUN a2enmod rewrite
 
-# DocumentRoot設定（Laravel未セットアップ時は/var/www/htmlを使用）
-ENV APACHE_DOCUMENT_ROOT=/var/www/html
-RUN sed -ri -e 's!DocumentRoot /var/www/html!DocumentRoot /var/www/html!g' /etc/apache2/sites-available/*.conf
+# DocumentRoot設定をLaravelのpublicディレクトリに設定
+RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
+    && sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/apache2.conf
 
 # .htaccessを有効にする設定
-RUN echo '<Directory /var/www/html>\n\
+RUN echo '<Directory /var/www/html/public>\n\
     Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
     Require all granted\n\
