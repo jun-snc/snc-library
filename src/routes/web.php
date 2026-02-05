@@ -4,7 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Graphic\HomeController as GraphicHomeController;
+use App\Http\Controllers\Graphic\Api\ImageController as GraphicApiImageController;
+use App\Http\Controllers\Spatial\HomeController as SpatialHomeController;
+use App\Http\Controllers\Spatial\Api\ImageController as SpatialApiImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +24,20 @@ use App\Http\Controllers\Admin\TagController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+// グラフィックデザイン公開画面
+Route::prefix('graphic')->group(function () {
+    Route::get('/', [GraphicHomeController::class, 'index'])->name('graphic.index');
+    Route::get('/api/images', [GraphicApiImageController::class, 'index'])->name('graphic.api.images.index');
+    Route::get('/api/images/{image}', [GraphicApiImageController::class, 'show'])->name('graphic.api.images.show');
+});
+
+// 空間デザイン公開画面
+Route::prefix('spatial')->group(function () {
+    Route::get('/', [SpatialHomeController::class, 'index'])->name('spatial.index');
+    Route::get('/api/images', [SpatialApiImageController::class, 'index'])->name('spatial.api.images.index');
+    Route::get('/api/images/{image}', [SpatialApiImageController::class, 'show'])->name('spatial.api.images.show');
 });
 
 // 管理画面 - 認証
@@ -51,6 +70,16 @@ Route::prefix('admin')->group(function () {
                 'edit' => 'admin.tags.edit',
                 'update' => 'admin.tags.update',
                 'destroy' => 'admin.tags.destroy',
+            ]);
+
+            // 画像管理
+            Route::resource('images', ImageController::class)->except(['show'])->names([
+                'index' => 'admin.images.index',
+                'create' => 'admin.images.create',
+                'store' => 'admin.images.store',
+                'edit' => 'admin.images.edit',
+                'update' => 'admin.images.update',
+                'destroy' => 'admin.images.destroy',
             ]);
         });
     });

@@ -25,7 +25,7 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
         <a href="{{ route('admin.genres.index', 'graphic') }}" class="btn" style="text-align: center; background: #2ecc71;">ジャンル管理</a>
         <a href="{{ route('admin.tags.index', 'graphic') }}" class="btn" style="text-align: center; background: #9b59b6;">タグ管理</a>
-        <a href="#" class="btn" style="text-align: center;">画像管理</a>
+        <a href="{{ route('admin.images.index', 'graphic') }}" class="btn" style="text-align: center;">画像管理</a>
     </div>
 </div>
 
@@ -49,7 +49,7 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
         <a href="{{ route('admin.genres.index', 'spatial') }}" class="btn" style="text-align: center; background: #2ecc71;">ジャンル管理</a>
         <a href="{{ route('admin.tags.index', 'spatial') }}" class="btn" style="text-align: center; background: #9b59b6;">タグ管理</a>
-        <a href="#" class="btn" style="text-align: center;">画像管理</a>
+        <a href="{{ route('admin.images.index', 'spatial') }}" class="btn" style="text-align: center;">画像管理</a>
     </div>
 </div>
 @endsection
