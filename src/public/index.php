@@ -16,7 +16,13 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+// 本番環境(Xserver)ではLaravelルートが public/ の2階層上に分離配置される
+// 開発環境(Docker)では public/ の1階層上に存在する
+$appBasePath = file_exists(__DIR__.'/../../snc-library-app/vendor/autoload.php')
+    ? __DIR__.'/../../snc-library-app'
+    : __DIR__.'/..';
+
+if (file_exists($maintenance = $appBasePath.'/storage/framework/maintenance.php')) {
     require $maintenance;
 }
 
@@ -31,7 +37,7 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 |
 */
 
-require __DIR__.'/../vendor/autoload.php';
+require $appBasePath.'/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +50,7 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app = require_once $appBasePath.'/bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 
